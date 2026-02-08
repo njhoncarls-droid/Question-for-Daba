@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Question...</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:sans-serif;
+}
+
+body{
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#ffe5e5;
+}
+
+.container{
+  display:flex;
+  flex-direction:column;
+  text-align:center;
+  align-items:center;
+  gap:20px;
+  max-width:500px;
+  margin:20px;
+}
+
+img{
+  width:200px;
+}
+
+.btn{
+  display:flex;
+  gap:25px;
+}
+
+.btn a{
+  text-decoration:none;
+  color:#111;
+  background:#fff;
+  padding:10px 25px;
+  border-radius:8px;
+  box-shadow:0.5rem 1rem 3rem hsl(0,0%,0%,0.3);
+  cursor:pointer;
+  user-select:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <img id="gif" src="intro.gif">
+  <h1 id="title">Daba I have a question…</h1>
+  <p id="text">Is it okay? 🥺</p>
+
+  <div class="btn">
+    <a id="yesBtn">Yes</a>
+    <a id="noBtn">No</a>
+  </div>
+</div>
+
+<script>
+let step = -1; // intro page
+
+const scenes = [
+  {
+    gif:"gif1.gif",
+    title:"Do you love me?",
+    text:"Tistingi pag no! 🔫"
+  },
+  {
+    gif:"gif2.gif",
+    title:"Yag no sa gayud! 😒",
+    text:"Think again Daba 🙄"
+  },
+  {
+    gif:"gif3.gif",
+    title:"No gihapon? Di ako musugot Daba 😠",
+    text:"Balika yaan 😣"
+  },
+  {
+    gif:"gif4.gif",
+    title:"Sure da kaw gayud saan Daba? Di kay gayud mag Yes? 😭",
+    text:"Mag cry sa ako doon hala 😥"
+  },
+  {
+    gif:"gif5.gif",
+    title:"I knew it! You love me a lot Daba 😊😉",
+    text:""
+  }
+];
+
+const gif = document.getElementById("gif");
+const title = document.getElementById("title");
+const text = document.getElementById("text");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+function loadScene(){
+  gif.src = scenes[step].gif;
+  title.innerText = scenes[step].title;
+  text.innerText = scenes[step].text;
+
+  if(step === scenes.length - 1){
+    yesBtn.style.display="none";
+    noBtn.style.display="none";
+  } else {
+    yesBtn.style.display="inline-block";
+    noBtn.style.display="inline-block";
+  }
+}
+
+yesBtn.addEventListener("click",()=>{
+  if(step === -1){
+    step = 0; // start main story
+    loadScene();
+  } else {
+    step = scenes.length - 1;
+    loadScene();
+  }
+});
+
+noBtn.addEventListener("click",()=>{
+  if(step === -1){
+    gif.src = "edi-wag.gif";
+    title.innerText = "Edi wag 😒";
+    text.innerText = "Sige! Dida lang. Okay 😤";
+    yesBtn.style.display="none";
+    noBtn.style.display="none";
+  } else if(step < scenes.length - 1){
+    step++;
+    loadScene();
+  }
+});
+
+/* moving NO button */
+function moveRandomEl(elm){
+  elm.style.position="absolute";
+  elm.style.top = Math.floor(Math.random()*90 + 5) + "%";
+  elm.style.left = Math.floor(Math.random()*90 + 5) + "%";
+}
+
+noBtn.addEventListener("mouseenter",(e)=>{
+  if(step === 3){
+    moveRandomEl(e.target);
+  }
+});
+</script>
+
+</body>
+</html>
